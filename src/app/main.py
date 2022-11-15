@@ -3,17 +3,17 @@ from flask_basicauth import BasicAuth
 from textblob import TextBlob
 from sklearn.linear_model import LinearRegression
 import pickle
+import os
 
-modelo = pickle.load(open('modelo.sav','rb'))
+modelo = pickle.load(open('../../models/modelo.sav','rb'))
 colunas = ['tamanho','ano','garagem']
 
 
 
 
 app = Flask(__name__)
-app.config['BASIC_AUTH_USERNAME'] = 'Heveraldo API'
-app.config['BASIC_AUTH_PASSWORD'] = 'aluracurso'
-
+app.config['BASIC_AUTH_USERNAME'] = os.environ.get('BASIC_AUTH_USERNAME')
+app.config['BASIC_AUTH_PASSWORD'] = os.environ.get('BASIC_AUTH_PASSWORD')
 basic_auth = BasicAuth(app)
 
 @app.route('/')
@@ -35,4 +35,4 @@ def cotacao(tamanho):
     preco = modelo.predict([dados_input])
     return jsonify(preco=preco[0])
 
-app.run(debug=True)
+app.run(debug=True,host='0.0.0.0')
