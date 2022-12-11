@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 import pickle
 import os
 
-modelo = pickle.load(open('../../models/modelo.sav','rb'))
+modelo = pickle.load(open('models/modelo.sav','rb'))
 colunas = ['tamanho','ano','garagem']
 
 
